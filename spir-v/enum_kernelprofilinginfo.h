@@ -6,22 +6,22 @@
 //	OpCaptureEventProfilingInfo.
 enum class KernelProfilingInfo : uint32_t
 {
-	None = 0x0,
+    None = 0x0,
 
-	CmdExecTime = 0x1,	// Indicates that the profiling info queried is the execution
-						// time.
-						// 
-						// Required Capability
-						//	Kernel
+    CmdExecTime = 0x1,	// Indicates that the profiling info queried is the execution
+                        // time.
+                        // 
+                        // Required Capability
+                        //	Kernel
 };
 
 
 static char* KernelProfilingInfoToString(KernelProfilingInfo input)
 {
-	switch (input)
-	{
-		case KernelProfilingInfo::None:			return "None";
-		case KernelProfilingInfo::CmdExecTime:	return "CmdExecTime";
-		default:	return "??";
-	}
+    switch (input)
+    {
+        case KernelProfilingInfo::None:			return "None";
+        case KernelProfilingInfo::CmdExecTime:	return "CmdExecTime";
+        default:								return nullptr;
+    }
 }

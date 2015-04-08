@@ -5,20 +5,21 @@
 //	OpLoopMerge.
 enum class LoopControl : uint32_t
 {
-    None = 0x0,
-    Unroll = 0x1,		// Strong request, to the extent possible, to unroll or unwind
-                        // this loop.
-    DontUnroll = 0x2,	// Strong request, to the extent possible, to keep this loop as a
-                        // loop, without unrolling.
+	None = 0x0,
+	Unroll = 0x1,		// Strong request, to the extent possible, to unroll or unwind
+						// this loop.
+	DontUnroll = 0x2,	// Strong request, to the extent possible, to keep this loop as a
+						// loop, without unrolling.
 };
 
 static char* LoopControlToString(LoopControl input)
 {
-    switch (input)
-    {
-        case LoopControl::None:			return "None";
-        case LoopControl::Unroll:		return "Unroll";
-        case LoopControl::DontUnroll:	return "DontUnroll";
-        default:						return nullptr;
-    }
+	switch (input)
+	{
+		case LoopControl::None:			return "None";
+		case LoopControl::Unroll:		return "Unroll";
+		case LoopControl::DontUnroll:	return "DontUnroll";
+		default:						return nullptr;
+	}
 }
+

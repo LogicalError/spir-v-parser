@@ -4,24 +4,23 @@
 // the meaning of other parts of the module. 
 //
 // Used by:
-//	OpSource.
+//  OpSource.
 enum class SourceLanguage : uint32_t
 {
-	Unknown = 0,
-	ESSL = 1,
-	GLSL = 2,
-	OpenCL = 3
+    Unknown = 0,
+    ESSL = 1,
+    GLSL = 2,
+    OpenCL = 3
 };
 
 static char* SourceLanguageString(SourceLanguage input)
 {
-	switch (input)
-	{
-		case SourceLanguage::Unknown:	return "Unknown";
-		case SourceLanguage::ESSL:		return "ESSL";
-		case SourceLanguage::GLSL:		return "GLSL";
-		case SourceLanguage::OpenCL:	return "OpenCL";
-		default:						return nullptr;
-	}
+    switch (input)
+    {
+        case SourceLanguage::Unknown:   return "Unknown";
+        case SourceLanguage::ESSL:      return "ESSL";
+        case SourceLanguage::GLSL:      return "GLSL";
+        case SourceLanguage::OpenCL:    return "OpenCL";
+        default:                        return nullptr;
+    }
 }
-

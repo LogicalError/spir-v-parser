@@ -38,4 +38,3 @@ static char* FPRoundingModeToString(FPRoundingMode input)
         default:                    return nullptr;
     }
 }
- 

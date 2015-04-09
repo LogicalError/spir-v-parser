@@ -46,4 +46,3 @@ static char* SamplerAddressingModeToString(SamplerAddressingMode input)
         default:                                    return nullptr;
     }
 }
- 

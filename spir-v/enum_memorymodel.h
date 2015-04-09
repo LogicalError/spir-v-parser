@@ -26,4 +26,3 @@ static char* MemoryModelToString(MemoryModel input)
         default:                        return nullptr;
     }
 }
- 

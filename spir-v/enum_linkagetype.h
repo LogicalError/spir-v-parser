@@ -24,4 +24,3 @@ static char* LinkageTypeToString(LinkageType input)
         default:                    return nullptr;
     }
 }
- 

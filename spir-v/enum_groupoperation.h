@@ -41,4 +41,3 @@ static char* GroupOperationToString(GroupOperation input)
         default:                            return nullptr;
     }
 }
- 

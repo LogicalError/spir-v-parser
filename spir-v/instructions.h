@@ -5,34 +5,27 @@
 // TODO: get rid of templates? 
 // TODO: probably should just use new khronos header files, no C++ class enums ..   -> still want the enum to string conversions for debugging
 // Q: should we support both C and C++? (naming differences between C++ and C version of khronos header files are problematic though)
-// TODO: support GLSL450Lib.h /OpenCLLib.h
+// TODO: support GLSL450Lib.h / OpenCLLib.h
 
-template<Opcode T> struct Instruction {};
+template<Opcode T> class InstructionHelper {};
 
 #define OP_STRUCT(OP_NAME) OP_NAME##Struct
 #define OP_INSTRUCTION_BASE(OP_NAME, MinWordCount, MaxWordCount, ParentStruct) \
     struct OP_STRUCT(OP_NAME);\
-    template<> struct Instruction<Opcode::OP_NAME>\
+    template<> class InstructionHelper<Opcode::OP_NAME> \
     {\
-        static bool Validate(InstructionHeader const*const instruction) \
+    public:\
+        static bool Validate(InstructionHeader const*const instruction)\
         {\
-            return instruction->opcode == Opcode::OP_NAME &&\
+            return (instruction->opcode    == Opcode::OP_NAME) &&\
                    (instruction->wordCount >= MinWordCount) &&\
                    (instruction->wordCount <= MaxWordCount);\
-        }\
-        \
-        static OP_STRUCT(OP_NAME) const*const CastTo(InstructionHeader const*const instruction) \
-        {\
-            if (instruction->opcode != Opcode::OP_NAME) return nullptr; \
-            return (OP_STRUCT(OP_NAME) const*const)instruction; \
         }\
     };\
     struct OP_STRUCT(OP_NAME) : ParentStruct
 
 #define OP_INSTRUCTION(OP_NAME, MinWordCount, MaxWordCount) OP_INSTRUCTION_BASE(OP_NAME, MinWordCount, MaxWordCount, InstructionHeader)
-#define CAST_TO(OP_NAME, instruction) Instruction<Opcode::OP_NAME>::CastTo(instruction)
-#define VALIDATE(OP_NAME, instruction) Instruction<Opcode::OP_NAME>::Validate(instruction)
-#define NEXT(instruction) ((InstructionHeader*)(((Word*)instruction) + instruction->wordCount))
+#define CAST_TO(OP_NAME, instruction) ((instruction->opcode == Opcode::OP_NAME) ? ((OP_STRUCT(OP_NAME) const*const)instruction) : ((OP_STRUCT(OP_NAME) const*const)nullptr))
 
 
 
@@ -48,6 +41,7 @@ typedef char        LiteralString[sizeof(Word)];
 #include "enums.h"
 
 
+
 #pragma pack(push)
 #pragma pack(1)
  
@@ -56,34 +50,6 @@ struct InstructionHeader
 {
     Opcode      opcode    : 16;
     uint16_t    wordCount : 16;
-
-    // TODO: overflow danger .. how to handle this?
-    // TODO: figure out if this is the best way to do this ..
-    // TODO: test
-    inline InstructionHeader const*const Next() const 
-    { 
-        return ((InstructionHeader const*)(((Word const*)this) + wordCount)); 
-    }
-
-    // TODO: test this
-    // TODO: figure out if this is the best way to do this ..
-    // NOTE: assumes string is the last element of an instruction (so far always the case)
-    inline size_t GetStringLength(LiteralString string)
-    {
-        size_t offset = (size_t)(((Word const*)string) - ((Word const*)this));
-        if (offset > wordCount || offset < 1) return (size_t)0;
-        return (size_t)(wordCount - offset) * sizeof(Word);
-    }
-
-    // TODO: test this
-    // TODO: figure out if this is the best way to do this ..
-    // NOTE: assumes string is the last element of an instruction (so far always the case)
-    inline char const* GetString(LiteralString string)
-    {
-        size_t offset = (size_t)(((Word const*)string) - ((Word const*)this));
-        if (offset > wordCount || offset < 1) return nullptr;
-        return (char const*)string;
-    }
 
     // TODO: figure out how to best validate an instruction using it's opcode 
     //       and the definitions below
@@ -3935,4 +3901,3 @@ OP_INSTRUCTION(OpGroupCommitWritePipe, 4, 4)
 };
 
 #pragma pack(pop)
-

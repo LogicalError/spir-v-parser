@@ -26,4 +26,3 @@ static char* DimensionalityToString(Dimensionality input)
         default:                        return nullptr;
     }
 }
- 

@@ -22,4 +22,3 @@ static char* LoopControlToString(LoopControl input)
         default:                        return nullptr;
     }
 }
- 

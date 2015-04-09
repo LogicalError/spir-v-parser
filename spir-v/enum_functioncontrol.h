@@ -31,4 +31,3 @@ static char* FunctionControlMaskToString(FunctionControl input)
         default:                            return nullptr;
     }
 }
- 

@@ -379,4 +379,3 @@ static char* DecorationToString(Decoration input)
         default:                                return nullptr;
     }
 }
- 

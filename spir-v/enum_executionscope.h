@@ -35,4 +35,3 @@ static char* ExecutionScopeToString(ExecutionScope input)
         default:                            return nullptr;
     }
 }
- 

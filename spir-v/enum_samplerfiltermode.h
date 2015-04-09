@@ -25,4 +25,3 @@ static char* SamplerFilterModeToString(SamplerFilterMode input)
         default:                            return nullptr;
     }
 }
- 

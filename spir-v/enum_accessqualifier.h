@@ -20,4 +20,3 @@ static char* AccessQualifierToString(AccessQualifier input)
         default:                            return nullptr;
     }
 }
- 

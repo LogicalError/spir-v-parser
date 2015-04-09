@@ -22,4 +22,3 @@ static char* MemoryAccessToString(MemoryAccess input)
         default:                        return nullptr;
     }
 }
- 
